@@ -1,0 +1,17 @@
+.git
+.gitignore
+.env
+.env.*
+outputs
+**/__pycache__
+**/*.pyc
+MOSS-TTS
+augmented_data.zip
+*.csv
+*.ipynb
+*.zip
+*.wav
+!samples/reference.wav
+*.json
+!homograph_lexicon.json
+*.md

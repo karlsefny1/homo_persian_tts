@@ -1,0 +1,50 @@
+name: persian-homograph-tts
+
+x-app: &app
+  build:
+    context: .
+    args:
+      TORCH_INDEX_URL: ${TORCH_INDEX_URL:-https://download.pytorch.org/whl/cpu}
+  image: persian-homograph-tts:${TAG:-latest}
+  environment:
+    HF_HOME: /cache/huggingface
+    HF_TOKEN: ${HF_TOKEN:-}
+  volumes:
+    - hf-cache:/cache/huggingface
+    - ./outputs:/outputs
+    - ./samples:/input:ro
+  working_dir: /app
+
+services:
+  tts:
+    <<: *app
+    command:
+      - --file
+      - /input/example.txt
+      - --ref
+      - /input/reference.wav
+      - --out
+      - /outputs/demo.wav
+      - --report
+      - /outputs/demo.json
+      - --verbose
+
+  bert:
+    <<: *app
+    profiles: ["tools"]
+    command:
+      - --dry-run
+      - --file
+      - /input/example.txt
+      - --report
+      - /outputs/bert-check.json
+      - --verbose
+
+  test:
+    <<: *app
+    profiles: ["tools"]
+    entrypoint: ["python", "-m", "unittest"]
+    command: ["discover", "-s", "tests", "-v"]
+
+volumes:
+  hf-cache:
