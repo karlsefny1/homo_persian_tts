@@ -23,5 +23,5 @@ esac
 
 exec python "$APP_DIR/persian_chatterbox_tts.py" \
     --clf "$BERT_DIR/homograph_clf" \
-    --lexicon "$BERT_DIR/homograph_lexicon.json" \
+    --lexicon "$APP_DIR/homograph_lexicon.json" \
     "$@"

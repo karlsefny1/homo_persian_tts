@@ -70,9 +70,9 @@ def load_chatterbox(device="auto", weights=None, model_id=PERSIAN_MODEL,
             from perth.perth_net.perth_net_implicit.perth_watermarker import PerthImplicitWatermarker  # noqa: F401
         except ImportError as exc:
             raise RuntimeError(
-                "Perth watermarking could not be imported. Run "
-                "`bash sandbox_chatterbox.sh setup` to repair dependencies. "
-                f"Original error: {exc}"
+                "Perth watermarking could not be imported. Reinstall dependencies "
+                "with `pip install -r requirements-chatterbox.txt` or rebuild the "
+                f"Docker image. Original error: {exc}"
             ) from exc
         raise RuntimeError("Perth watermarking is unavailable; restart Python after repairing dependencies")
     from chatterbox.mtl_tts import ChatterboxMultilingualTTS

@@ -62,6 +62,20 @@ are pinned to `5bb1f6ee58e50c3b8d408bc82a6d3740c2db6e18`. The Persian checkpoint
 defaults to `main`; for a frozen deployment, pass `--revision <commit>` to
 `persian_chatterbox_tts.py`.
 
+## BERT model locations
+
+The classifier weights are not stored in this repository. During the Docker
+build, the BERT repository is cloned at a pinned commit and
+`homograph_clf/model.pt` is fetched through Git LFS. The image contains:
+
+- `/opt/bert/homograph_clf/`: `config.json`, `meta.json`, tokenizer files, and
+  `model.pt`
+- `/app/homograph_lexicon.json`: the reading lexicon copied from this repository
+
+`docker/entrypoint.sh` passes those two paths as `--clf` and `--lexicon` to the
+pipeline. For local runs, point `--clf` at your clone's `homograph_clf` directory
+and `--lexicon` at this repository's `homograph_lexicon.json`.
+
 ## Requirements
 
 - Docker with Compose v2 or newer.
